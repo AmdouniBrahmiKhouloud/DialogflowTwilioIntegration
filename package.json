@@ -13,6 +13,7 @@
     "@google-cloud/dialogflow": "^5.5.0",
     "body-parser": "^1.20.1",
     "dialogflow": "^1.2.0",
+    "dialogflow-fulfillment": "^0.6.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "twilio": "^4.7.2"

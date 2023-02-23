@@ -3,8 +3,10 @@ const twilio = require('twilio');
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 
 const { SessionsClient } = require('@google-cloud/dialogflow');
+const dialogflowFulfillment = require('dialogflow-fulfillment');
 
 const bodyParser = require('body-parser');
+const {request} = require("express");
 const app = express();// parse application/json
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -50,7 +52,18 @@ app.post('/statusCallback', (req, res) => {
 
 //personalized webhook for dialogflow
 
-app.post('/webhook')
+app.post('/webhook',(req, res) => {
+    const agent = new dialogflowFulfillment.WebhookClient({
+        request:req,
+        response:res
+    })
+    function sayHello(agent){
+        agent.add("hello from backend")
+    }
+    var intentMap = new Map();
+    intentMap.set('Default Welcome Intent',sayHello);
+    agent.handleRequest(intentMap);
+})
 
 
 
